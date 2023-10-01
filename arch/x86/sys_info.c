@@ -34,24 +34,25 @@ void collect_sys_info(struct sys_info *info)
     collect_multiboot_info(info);
 #endif
 
-    if (!info->memrange) {
-	printk("Can't get memory map from firmware. "
-		"Using hardcoded default.\n");
-	info->n_memranges = 2;
-	info->memrange = malloc(2 * sizeof(struct memrange));
-	info->memrange[0].base = 0;
-	info->memrange[0].size = 640*1024;
-	info->memrange[1].base = 1024*1024;
-	info->memrange[1].size = 32*1024*1024
-	    - info->memrange[1].base;
+    if (!info->memrange)
+    {
+        printk("Can't get memory map from firmware. "
+               "Using hardcoded default.\n");
+        info->n_memranges = 2;
+        info->memrange = malloc(2 * sizeof(struct memrange));
+        info->memrange[0].base = 0;
+        info->memrange[0].size = 640 * 1024;
+        info->memrange[1].base = 1024 * 1024;
+        info->memrange[1].size = 32 * 1024 * 1024 - info->memrange[1].base;
     }
 
     debug("\n");
-    mmap=info->memrange;
-    for (i = 0; i < info->n_memranges; i++) {
-	debug("%016Lx-", mmap[i].base);
-	debug("%016Lx\n", mmap[i].base+mmap[i].size);
-	total += mmap[i].size;
+    mmap = info->memrange;
+    for (i = 0; i < info->n_memranges; i++)
+    {
+        debug("%016Lx-", mmap[i].base);
+        debug("%016Lx\n", mmap[i].base + mmap[i].size);
+        total += mmap[i].size;
     }
-    debug("RAM %Ld MB\n", (total + 512*1024) >> 20);
+    debug("RAM %Ld MB\n", (total + 512 * 1024) >> 20);
 }
