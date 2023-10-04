@@ -88,5 +88,6 @@ os_seek_offset( int fd, long long offset )
 int
 os_same( int fd1, int fd2 )
 {
+	/* printk("os_same %d %d\n", fd1, fd2 ); */
 	return fd1 == fd2;
 }
